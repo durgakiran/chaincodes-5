@@ -6,7 +6,7 @@ const { Contract } = require('fabric-contract-api');
 
 
 
-class WDRA extends Contract  {
+class CoolStori extends Contract  {
     constructor() {
         super('WDRA');
     }

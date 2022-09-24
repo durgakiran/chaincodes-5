@@ -1,6 +1,6 @@
 'use strict'
 
-const WDRA = require('./wdra')
-module.exports.WDRA = WDRA;
-module.exports.contracts = ['WDRA'];
+const CoolStori = require('./wdra')
+module.exports.CoolStori = CoolStori;
+module.exports.contracts = ['CoolStori'];
 
