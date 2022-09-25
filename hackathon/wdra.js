@@ -124,7 +124,7 @@ class CoolStori extends Contract  {
     /**
      * we take info and push it to HLF
      */
-    async onboardCS(ctx, csId, csInfo) {
+    async OnboardCS(ctx, csId, csInfo) {
         console.info('creating a new warehouse entry');
         const cs = {
             id: csId,
@@ -134,7 +134,7 @@ class CoolStori extends Contract  {
         await ctx.stub.putState(csId, Buffer.from(JSON.stringify(cs)));
     }
 
-    async getCSById(ctx, csId) {
+    async GetCSById(ctx, csId) {
         // received data would be in bytes
         const csInfoByte = await ctx.stub.getState(csId);
         if (!csInfo) {
@@ -147,7 +147,7 @@ class CoolStori extends Contract  {
     /**
      * we take info and push it to HLF
      */
-     async registerUser(ctx, userId, userInfo) {
+     async RegisterUser(ctx, userId, userInfo) {
         const user = {
             id: userId,
             info: userInfo
@@ -156,7 +156,7 @@ class CoolStori extends Contract  {
         await ctx.stub.putState(userId, Buffer.from(JSON.stringify(user)));
     }
 
-    async queryAllUsers(ctx) {
+    async QueryAllUsers(ctx) {
         console.info('==========queried for all users==========')
         const startKey = '';
         const endKey = '';
@@ -176,7 +176,7 @@ class CoolStori extends Contract  {
         return JSON.stringify(allResults);
     }
 
-    async queryUserById(ctx, userId) {
+    async QueryUserById(ctx, userId) {
         console.info('==========queried for user by id==========')
         const userInfoByte = await ctx.stub.getState(userId);
         if (!userInfoByte) {
@@ -190,7 +190,7 @@ class CoolStori extends Contract  {
     /**
      * 
      */
-     async registerInsurer(ctx, insuranceOrgId, insOrgInfo) {
+     async RegisterInsurer(ctx, insuranceOrgId, insOrgInfo) {
         const insuranceOrgInfo = {
             id: insuranceOrgId,
             info: insOrgInfo
@@ -200,7 +200,7 @@ class CoolStori extends Contract  {
     }
 
 
-    async registerCollateralManager(ctx, cmId, cmInfo) {
+    async RegisterCollateralManager(ctx, cmId, cmInfo) {
         const collateralManagerInfo = {
             id: cmId,
             info: cmInfo
@@ -209,7 +209,7 @@ class CoolStori extends Contract  {
         await ctx.stub.putState(cmId, Buffer.from(JSON.stringify(collateralManagerInfo)));
     }
 
-    async registerTralog(ctx, trId, trInfo) {
+    async RegisterTralog(ctx, trId, trInfo) {
         const tralogInfo = {
             id: trId,
             info: trInfo
@@ -219,7 +219,7 @@ class CoolStori extends Contract  {
     }
 
 
-    async requestForQuotation(ctx, reqId, reqInfo) {
+    async RequestForQuotation(ctx, reqId, reqInfo) {
         const requestInfo = {
             id: reqId,
             info: reqInfo
@@ -229,7 +229,7 @@ class CoolStori extends Contract  {
     }
 
 
-    async quoteResponseFromCS(ctx, resId, reqId, reqInfo) {
+    async QuoteResponseFromCS(ctx, resId, reqId, reqInfo) {
         const responseInfo = {
             id: resId,
             reqId,
@@ -239,7 +239,7 @@ class CoolStori extends Contract  {
         await ctx.stub.putState(resId, Buffer.from(JSON.stringify(responseInfo)));
     }
 
-    async confirmProposal(ctx, cnfId, resId, reqId, resInfo) {
+    async ConfirmProposal(ctx, cnfId, resId, reqId, resInfo) {
         const confirmInfo = {
             id: cnfId,
             resId: resId,
