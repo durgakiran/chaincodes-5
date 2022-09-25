@@ -218,7 +218,8 @@ class CoolStori extends Contract  {
      async RegisterInsurer(ctx, insuranceOrgId, insOrgInfo) {
         const insuranceOrgInfo = {
             id: insuranceOrgId,
-            info: insOrgInfo
+            info: insOrgInfo,
+            type: 'insurer'
         };
 
         await ctx.stub.putState(insuranceOrgId, Buffer.from(JSON.stringify(insuranceOrgInfo)));
@@ -228,7 +229,8 @@ class CoolStori extends Contract  {
     async RegisterCollateralManager(ctx, cmId, cmInfo) {
         const collateralManagerInfo = {
             id: cmId,
-            info: cmInfo
+            info: cmInfo,
+            type: 'cm'
         };
 
         await ctx.stub.putState(cmId, Buffer.from(JSON.stringify(collateralManagerInfo)));
@@ -237,20 +239,45 @@ class CoolStori extends Contract  {
     async RegisterTralog(ctx, trId, trInfo) {
         const tralogInfo = {
             id: trId,
-            info: trInfo
+            info: trInfo,
+            info: 'trl'
         };
 
         await ctx.stub.putState(trId, Buffer.from(JSON.stringify(tralogInfo)));
     }
 
 
-    async RequestForQuotation(ctx, reqId, reqInfo) {
+    async RequestForQuotation(ctx, userId, reqId, reqInfo) {
         const requestInfo = {
             id: reqId,
-            info: reqInfo
+            userId: userId,
+            info: reqInfo,
+            type: 'quotation'
         };
 
         await ctx.stub.putState(reqId, Buffer.from(JSON.stringify(requestInfo)));
+    }
+
+    async GetRequestsForQuotationByUserId(ctx, userId) {
+        const startKey = '';
+        const endKey = '';
+        const allResults = [];
+        for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('uft-8');
+            let record;
+            try {
+                record = record.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            if (record.type == 'quotation' && record.userId == userId) {
+                allResults.push({ Key: key, Record: record });
+            }
+        }
+        console.info(allResults);
+        return JSON.stringify(allResults);
+
     }
 
 
@@ -258,10 +285,32 @@ class CoolStori extends Contract  {
         const responseInfo = {
             id: resId,
             reqId,
-            info: reqInfo
+            info: reqInfo,
+            type: 'quotationresponse'
         };
 
         await ctx.stub.putState(resId, Buffer.from(JSON.stringify(responseInfo)));
+    }
+
+    async GetQuotationsByReqId(ctx, reqId) {
+        const startKey = '';
+        const endKey = '';
+        const allResults = [];
+        for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('uft-8');
+            let record;
+            try {
+                record = record.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            if (record.type == 'quotationresponse' && record.reqId == reqId) {
+                allResults.push({ Key: key, Record: record });
+            }
+        }
+        console.info(allResults);
+        return JSON.stringify(allResults);
     }
 
     async ConfirmProposal(ctx, cnfId, resId, reqId, resInfo) {
@@ -269,10 +318,32 @@ class CoolStori extends Contract  {
             id: cnfId,
             resId: resId,
             reqId,
-            info: resInfo
+            info: resInfo,
+            type: 'proposalconfirmation'
         };
 
         await ctx.stub.putState(cnfId, Buffer.from(JSON.stringify(confirmInfo)));
+    }
+
+    async ReqStatus(ctx, reqId) {
+        const startKey = '';
+        const endKey = '';
+        const allResults = [];
+        for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('uft-8');
+            let record;
+            try {
+                record = record.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            if (record.type == 'proposalconfirmation' && record.reqId == reqId) {
+                allResults.push({ Key: key, Record: { confirmed: true } });
+            }
+        }
+        console.info(allResults);
+        return JSON.stringify(allResults);
     }
 }
 
