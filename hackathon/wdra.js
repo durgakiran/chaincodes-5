@@ -155,7 +155,7 @@ class CoolStori extends Contract  {
             try {
                 record = record.parse(strValue);
             } catch (err) {
-                console.log(err);
+                console.log(key, value, err);
                 record = strValue;
             }
             if (record['type'] == 'cs') {
