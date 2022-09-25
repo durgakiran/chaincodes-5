@@ -128,7 +128,8 @@ class CoolStori extends Contract  {
         console.info('creating a new warehouse entry');
         const cs = {
             id: csId,
-            info: csInfo
+            info: csInfo,
+            type: 'cs'
         };
 
         await ctx.stub.putState(csId, Buffer.from(JSON.stringify(cs)));
@@ -137,11 +138,32 @@ class CoolStori extends Contract  {
     async GetCSById(ctx, csId) {
         // received data would be in bytes
         const csInfoByte = await ctx.stub.getState(csId);
-        if (!csInfo) {
+        if (!csInfoByte) {
             throw new Error(`${csId} does not exist`);
         }
         
         return csInfoByte.toString();
+    }
+
+    async FetchAllCS(ctx) {
+        const startKey = '';
+        const endKey = '';
+        const allResults = [];
+        for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('uft-8');
+            let record;
+            try {
+                record = record.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            if (record['type'] == 'cs') {
+                allResults.push({ Key: key, Record: record });
+            }
+        }
+        console.info(allResults);
+        return JSON.stringify(allResults);
     }
 
     /**
