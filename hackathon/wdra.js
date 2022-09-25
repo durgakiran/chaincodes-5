@@ -141,4 +141,4 @@ class CoolStori extends Contract  {
     }
 }
 
-module.exports = WDRA
+module.exports = CoolStori
