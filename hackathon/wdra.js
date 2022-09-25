@@ -11,13 +11,13 @@ class CoolStori extends Contract  {
     async InitLedger(ctx) {
         const assets = [
             {
-                id: CS1,
+                id: 'cs0',
                 info: {}
             }
         ];
 
         for (const asset of assets) {
-            asset.docType = 'cs';
+            asset.type = 'cs';
             // example of how to write to world state deterministically
             // use convetion of alphabetic order
             // we insert data in alphabetic order using 'json-stringify-deterministic' and 'sort-keys-recursive'
@@ -172,7 +172,8 @@ class CoolStori extends Contract  {
      async RegisterUser(ctx, userId, userInfo) {
         const user = {
             id: userId,
-            info: userInfo
+            info: userInfo,
+            type: 'user'
         };
 
         await ctx.stub.putState(userId, Buffer.from(JSON.stringify(user)));
@@ -192,7 +193,9 @@ class CoolStori extends Contract  {
                 console.log(err);
                 record = strValue;
             }
-            allResults.push({ Key: key, Record: record });
+            if (record.type == 'user') {
+                allResults.push({ Key: key, Record: record });
+            }
         }
         console.info(allResults);
         return JSON.stringify(allResults);
