@@ -150,7 +150,7 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
+            const strValue = await ctx.stub.getState(key).toString();
             let record;
             try {
                 record = record.parse(strValue);
@@ -185,7 +185,7 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
+            const strValue = await ctx.stub.getState(key).toString();
             let record;
             try {
                 record = record.parse(strValue);
@@ -263,7 +263,7 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
+            const strValue = await ctx.stub.getState(key).toString();
             let record;
             try {
                 record = record.parse(strValue);
@@ -297,7 +297,7 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
+            const strValue = await ctx.stub.getState(key).toString();
             let record;
             try {
                 record = record.parse(strValue);
@@ -330,7 +330,7 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
+            const strValue = await ctx.stub.getState(key).toString();
             let record;
             try {
                 record = record.parse(strValue);
