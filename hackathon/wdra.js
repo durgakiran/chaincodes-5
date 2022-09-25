@@ -150,10 +150,10 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = await ctx.stub.getState(key).toString();
+            const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
-                record = record.parse(strValue);
+                record = JSON.parse(strValue);
             } catch (err) {
                 console.log(key, value, err);
                 record = strValue;
@@ -185,10 +185,10 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = await ctx.stub.getState(key).toString();
+            const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
-                record = record.parse(strValue);
+                record = JSON.parse(strValue);
             } catch (err) {
                 console.log(err);
                 record = strValue;
@@ -263,10 +263,10 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = await ctx.stub.getState(key).toString();
+            const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
-                record = record.parse(strValue);
+                record = JSON.parse(strValue);
             } catch (err) {
                 console.log(err);
                 record = strValue;
@@ -297,10 +297,10 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = await ctx.stub.getState(key).toString();
+            const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
-                record = record.parse(strValue);
+                record = JSON.parse(strValue);
             } catch (err) {
                 console.log(err);
                 record = strValue;
@@ -330,10 +330,10 @@ class CoolStori extends Contract  {
         const endKey = '';
         const allResults = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = await ctx.stub.getState(key).toString();
+            const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
-                record = record.parse(strValue);
+                record = JSON.parse(strValue);
             } catch (err) {
                 console.log(err);
                 record = strValue;
